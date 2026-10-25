@@ -13,12 +13,7 @@ We use [DiffPhysDrone](https://github.com/HenryHuYu/DiffPhysDrone) as the upstre
 ## 2. Team
 
 | Member | Student ID |
-|---|---|
-| Isha | IIT2023202 |
-| Kavya Mitruka | IIT2023199 |
-| Shree Kruthi | IIT2023188 |
-| Amulya | IIT2023068 |
-| Aditi Satpathy | MRM2025005 |
+
 
 Contributions and file ownership will be recorded as development proceeds. The project may add one further member, subject to course approval.
 
