@@ -1,0 +1,3 @@
+[submodule "simulator/DiffPhysDrone"]
+	path = simulator/DiffPhysDrone
+	url = https://github.com/HenryHuYu/DiffPhysDrone.git
