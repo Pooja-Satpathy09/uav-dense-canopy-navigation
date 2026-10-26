@@ -1,0 +1,11 @@
+{
+  "collision_tolerance_m": 1e-08,
+  "dt_s": 0.06666666666666667,
+  "goal_radius_m": 0.5,
+  "ground_z_m": -1.0,
+  "target_speed_mps": 2.0,
+  "timeout_s": 12.0,
+  "traversability_grid": 5,
+  "traversability_headings": 8,
+  "traversability_step_m": 0.1
+}

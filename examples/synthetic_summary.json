@@ -1,0 +1,177 @@
+{
+  "groups": [
+    {
+      "condition": {
+        "camera_angle_deg": null,
+        "checkpoint_sha256": null,
+        "config": {
+          "collision_tolerance_m": 1e-08,
+          "dt_s": 0.06666666666666667,
+          "goal_radius_m": 0.5,
+          "ground_z_m": -1.0,
+          "target_speed_mps": 2.0,
+          "timeout_s": 12.0,
+          "traversability_grid": 5,
+          "traversability_headings": 8,
+          "traversability_step_m": 0.1
+        },
+        "difficulty": "synthetic",
+        "library_version": "0.1.0",
+        "noise_sigma": 0,
+        "project_commit": null,
+        "project_dirty": null,
+        "simulator_commit": null,
+        "simulator_dirty": null,
+        "software_fingerprint": null,
+        "source": "synthetic"
+      },
+      "eligible_runs": 3,
+      "incomplete_or_numerical": 1,
+      "metrics": {
+        "average_speed_mps": {
+          "mean": 2.3846273440073587,
+          "median": 2.0,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 0.2,
+          "p95": 4.838493828819868,
+          "scene_cluster_ci95_mean": null,
+          "std": 2.598380004025319,
+          "successful_flights": {
+            "mean": 2.0,
+            "median": 2.0,
+            "n": 1,
+            "p05": 2.0,
+            "p95": 2.0,
+            "std": null
+          }
+        },
+        "collision": {
+          "events": 1,
+          "mean": 0.3333333333333333,
+          "median": 0,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 0.0,
+          "p95": 0.8999999999999999,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.5773502691896257,
+          "wilson_ci95_independent_trials_only": [
+            0.06149194472039621,
+            0.7923403991979522
+          ]
+        },
+        "goal_success": {
+          "events": 1,
+          "mean": 0.3333333333333333,
+          "median": 0,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 0.0,
+          "p95": 0.8999999999999999,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.5773502691896257,
+          "wilson_ci95_independent_trials_only": [
+            0.06149194472039621,
+            0.7923403991979522
+          ]
+        },
+        "jerk_rms_mps3": {
+          "mean": 0.0,
+          "median": 0.0,
+          "missing_or_non_ok": 1,
+          "n": 2,
+          "p05": 0.0,
+          "p95": 0.0,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.0,
+          "successful_flights": {
+            "mean": 0.0,
+            "median": 0.0,
+            "n": 1,
+            "p05": 0.0,
+            "p95": 0.0,
+            "std": null
+          }
+        },
+        "min_obstacle_clearance_m": {
+          "mean": 1.575148047469967,
+          "median": 0.3,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": -0.24000000000000005,
+          "p95": 4.2828997281689105,
+          "scene_cluster_ci95_mean": null,
+          "std": 2.7446810587653623
+        },
+        "path_excess_factor": {
+          "mean": -0.4948705989325975,
+          "median": -0.4846117967977924,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": -0.9484611796797793,
+          "p95": -0.04846117967977931,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.5000789260366115,
+          "successful_flights": {
+            "mean": 0.0,
+            "median": 0.0,
+            "n": 1,
+            "p05": 0.0,
+            "p95": 0.0,
+            "std": null
+          }
+        },
+        "relative_end_distance": {
+          "mean": 0.5051294010674026,
+          "median": 0.5153882032022076,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 0.05153882032022076,
+          "p95": 0.9515388203202206,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.5000789260366115
+        },
+        "relative_gap_size": {
+          "mean": 2.5,
+          "median": 2.5,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 2.5,
+          "p95": 2.5,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.0
+        },
+        "speed_rmse_mps": {
+          "mean": 1.717960677340692,
+          "median": 2.0,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 0.2,
+          "p95": 3.038493828819868,
+          "scene_cluster_ci95_mean": null,
+          "std": 1.5957451559138494
+        },
+        "traversability": {
+          "mean": 7.3946133843687205,
+          "median": 7.3946133843687205,
+          "missing_or_non_ok": 0,
+          "n": 3,
+          "p05": 7.3946133843687205,
+          "p95": 7.3946133843687205,
+          "scene_cluster_ci95_mean": null,
+          "std": 0.0
+        }
+      },
+      "runs": 4,
+      "scene_clusters": 1
+    }
+  ],
+  "notes": [
+    "Rates use eligible completed runs; report excluded runs alongside rates.",
+    "Wilson intervals assume independent trials; use scene-cluster bootstrap for repeated scenes.",
+    "Bootstrap is unavailable with fewer than two independent scene clusters.",
+    "No uncertainty estimate establishes sim-to-real performance."
+  ],
+  "schema_version": "1.0"
+}

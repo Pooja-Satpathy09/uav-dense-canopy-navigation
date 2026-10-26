@@ -1,0 +1,111 @@
+{
+  "complete": true,
+  "config": {
+    "collision_tolerance_m": 1e-08,
+    "dt_s": 0.06666666666666667,
+    "goal_radius_m": 0.5,
+    "ground_z_m": -1.0,
+    "target_speed_mps": 2.0,
+    "timeout_s": 12.0,
+    "traversability_grid": 5,
+    "traversability_headings": 8,
+    "traversability_step_m": 0.1
+  },
+  "diagnostics": {
+    "duration_s": 12,
+    "final_goal_distance_m": 10.0,
+    "initial_goal_distance_m": 10.0,
+    "min_ground_clearance_m": 2.3,
+    "path_length_m": 0.0,
+    "sample_count": 13,
+    "scene": {
+      "altitude_m": 1.5,
+      "blocked_grid_positions": 2,
+      "grid_positions": 25,
+      "ray_count": 200
+    }
+  },
+  "difficulty": "synthetic",
+  "library_version": "0.1.0",
+  "metadata": {
+    "run_fingerprint": "ee38a3e38b51c98d65919f214aa0385ebaaf3b61d7e0ff67e7f0103bc72977d7",
+    "run_id": "timeout",
+    "scene_hash": "44b89acc8f5fd3b417d1995d4bfa537110defa359cef86cea14f87b166f7355c",
+    "source": "synthetic"
+  },
+  "metrics": {
+    "average_speed_mps": {
+      "note": "",
+      "status": "ok",
+      "unit": "m/s",
+      "value": 0.0,
+      "version": "1.0"
+    },
+    "collision": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 0,
+      "version": "1.0"
+    },
+    "goal_success": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 0,
+      "version": "1.0"
+    },
+    "jerk_rms_mps3": {
+      "note": "Velocity differences; midpoint acceleration times; derivative-support weighting",
+      "status": "ok",
+      "unit": "m/s^3",
+      "value": 0.0,
+      "version": "1.0"
+    },
+    "min_obstacle_clearance_m": {
+      "note": "Minimum on recorded piecewise-linear path",
+      "status": "ok",
+      "unit": "m",
+      "value": 4.725444142409901,
+      "version": "1.0"
+    },
+    "path_excess_factor": {
+      "note": "Straight-line reference; incomplete flights can have negative values",
+      "status": "ok",
+      "unit": "1",
+      "value": -1.0,
+      "version": "1.0"
+    },
+    "relative_end_distance": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 1.0,
+      "version": "1.0"
+    },
+    "relative_gap_size": {
+      "note": "Minimum declared passage width / drone diameter; project definition",
+      "status": "ok",
+      "unit": "1",
+      "value": 2.5,
+      "version": "1.0"
+    },
+    "speed_rmse_mps": {
+      "note": "Right-endpoint time weighting; constant commanded speed magnitude",
+      "status": "ok",
+      "unit": "m/s",
+      "value": 2.0,
+      "version": "1.0"
+    },
+    "traversability": {
+      "note": "Fixed-altitude XY grid/rays; blocked origins contribute zero",
+      "status": "ok",
+      "unit": "1",
+      "value": 7.3946133843687205,
+      "version": "1.0"
+    }
+  },
+  "scene_id": "synthetic_known_gap",
+  "schema_version": "1.0",
+  "termination": "timeout"
+}

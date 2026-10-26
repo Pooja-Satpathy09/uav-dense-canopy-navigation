@@ -1,0 +1,7 @@
+scene_id,run_id,time,x,y,z,vx,vy,vz,distance_to_goal,collision,reached_goal
+synthetic_known_gap,success,0,0,0,1.5,2,0,0,10.0,False,False
+synthetic_known_gap,success,1,2,0,1.5,2,0,0,8.0,False,False
+synthetic_known_gap,success,2,4,0,1.5,2,0,0,6.0,False,False
+synthetic_known_gap,success,3,6,0,1.5,2,0,0,4.0,False,False
+synthetic_known_gap,success,4,8,0,1.5,2,0,0,2.0,False,False
+synthetic_known_gap,success,5,10,0,1.5,2,0,0,0.0,False,True

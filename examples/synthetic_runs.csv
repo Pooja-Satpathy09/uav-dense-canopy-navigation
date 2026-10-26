@@ -1,0 +1,5 @@
+scene_id,difficulty,termination,complete,source,seed,target_speed_mps,noise_sigma,average_speed_mps,average_speed_mps__status,collision,collision__status,goal_success,goal_success__status,jerk_rms_mps3,jerk_rms_mps3__status,min_obstacle_clearance_m,min_obstacle_clearance_m__status,path_excess_factor,path_excess_factor__status,relative_end_distance,relative_end_distance__status,relative_gap_size,relative_gap_size__status,speed_rmse_mps,speed_rmse_mps__status,traversability,traversability__status
+synthetic_known_gap,synthetic,collision,True,synthetic,,2.0,,5.153882032022076,ok,1,ok,0,ok,,undefined,-0.30000000000000004,ok,-0.4846117967977924,ok,0.5153882032022076,ok,2.5,ok,3.153882032022076,ok,7.3946133843687205,ok
+synthetic_known_gap,synthetic,incomplete,False,synthetic,,2.0,,1.0,ok,0,ok,0,ok,0.0,ok,0.3,ok,-0.5,ok,0.5,ok,2.5,ok,1.0,ok,7.3946133843687205,ok
+synthetic_known_gap,synthetic,goal_reached,True,synthetic,,2.0,,2.0,ok,0,ok,1,ok,0.0,ok,0.3,ok,0.0,ok,0.0,ok,2.5,ok,0.0,ok,7.3946133843687205,ok
+synthetic_known_gap,synthetic,timeout,True,synthetic,,2.0,,0.0,ok,0,ok,0,ok,0.0,ok,4.725444142409901,ok,-1.0,ok,1.0,ok,2.5,ok,2.0,ok,7.3946133843687205,ok
