@@ -1,0 +1,15 @@
+Complete project validation, 2026-10-27
+
+- Team source snapshot and pinned simulator source downloaded and included.
+- All original source files verified unchanged against the downloaded archives.
+- 47 benchmark unittest cases discovered: 45 passed, 2 explicit GPU tests skipped.
+- Nine CPU script checks passed, including the compatibility evaluator check.
+- CPU controlled-gap demo, JSON summary and CSV export executed successfully.
+- Restore-GitCheckout.ps1 parsed successfully; cloning/restoring was not executed here.
+- Final ZIP CRC integrity and every listed SHA256 verified.
+
+Python used for CPU checks: 3.14.4. CPU package requires Python 3.10+.
+The first local test attempt encountered sandbox temporary-directory permissions;
+rerunning with a writable workspace temporary directory passed.
+No real CUDA flight, full training checkpoint, or Torch-dependent bridge check
+was run. Synthetic examples are labeled synthetic. No remote repository changed.

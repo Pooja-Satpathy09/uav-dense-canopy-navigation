@@ -1,0 +1,14 @@
+scene_id,run_id,time,x,y,z,vx,vy,vz,distance_to_goal,collision,reached_goal
+synthetic_known_gap,timeout,0,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,1,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,2,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,3,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,4,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,5,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,6,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,7,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,8,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,9,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,10,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,11,0,0,1.5,0,0,0,10.0,False,False
+synthetic_known_gap,timeout,12,0,0,1.5,0,0,0,10.0,False,False

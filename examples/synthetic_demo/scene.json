@@ -1,0 +1,66 @@
+{
+  "bounds": [
+    [
+      -1,
+      11
+    ],
+    [
+      -3,
+      3
+    ],
+    [
+      -1,
+      5
+    ]
+  ],
+  "difficulty": "synthetic",
+  "drone_radius": 0.2,
+  "goal": [
+    10,
+    0,
+    1.5
+  ],
+  "ground_z_m": -1,
+  "obstacles": [
+    {
+      "center": [
+        5,
+        -1.25,
+        1.5
+      ],
+      "half_extents": [
+        0.1,
+        0.75,
+        2
+      ],
+      "type": "box"
+    },
+    {
+      "center": [
+        5,
+        1.25,
+        1.5
+      ],
+      "half_extents": [
+        0.1,
+        0.75,
+        2
+      ],
+      "type": "box"
+    }
+  ],
+  "passages": [
+    {
+      "description": "Between y=-0.5 and y=0.5 faces of the two boxes",
+      "free_width_m": 1.0,
+      "geometry_verified": true,
+      "id": "gap_x5"
+    }
+  ],
+  "scene_id": "synthetic_known_gap",
+  "start": [
+    0,
+    0,
+    1.5
+  ]
+}

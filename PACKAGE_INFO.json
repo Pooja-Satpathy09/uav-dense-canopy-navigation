@@ -1,0 +1,14 @@
+{
+  "package": "UAV navigation complete project source with benchmark additions",
+  "assembled_date": "2026-10-27",
+  "team_repository": "https://github.com/Pooja-Satpathy09/uav-dense-canopy-navigation",
+  "team_revision": "a09299e5525b8098d378d402e8ef3f20ca290e26",
+  "simulator_repository": "https://github.com/HenryHuYu/DiffPhysDrone",
+  "simulator_revision": "271936190b5c2a5e760230e718fa6b167718a5bf",
+  "original_sources_preserved": true,
+  "contains_git_history": false,
+  "contains_trained_checkpoints": false,
+  "contains_drive_only_training_changes": false,
+  "gpu_execution_verified": false,
+  "cpu_validation": "45 benchmark cases passed; 2 GPU cases skipped; 9 script checks passed"
+}

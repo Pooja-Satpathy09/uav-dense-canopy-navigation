@@ -1,0 +1,16 @@
+name: UAV benchmark CPU tests
+on:
+  push:
+  pull_request:
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check analytical metrics and CLI
+        run: python -m unittest discover -s benchmark_tests -v
+      - name: Run synthetic demonstration
+        run: python -m uav_benchmark demo --out benchmark_results/ci_demo

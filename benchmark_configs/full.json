@@ -1,0 +1,8 @@
+{
+  "config": "smoke.json",
+  "scene_glob": "benchmark_scenes/*_seed_*.json",
+  "speeds_mps": [2.0, 3.0, 4.0],
+  "noise_sigmas": [0.0, 0.02],
+  "seeds": [42, 43, 44],
+  "camera_angle_deg": 10
+}

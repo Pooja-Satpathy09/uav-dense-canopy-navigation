@@ -1,0 +1,28 @@
+{
+  "runs": [
+    {
+      "config": "config.json",
+      "scene": "scene.json",
+      "source": "synthetic",
+      "trajectory": "success.csv"
+    },
+    {
+      "config": "config.json",
+      "scene": "scene.json",
+      "source": "synthetic",
+      "trajectory": "timeout.csv"
+    },
+    {
+      "config": "config.json",
+      "scene": "scene.json",
+      "source": "synthetic",
+      "trajectory": "partial.csv"
+    },
+    {
+      "config": "config.json",
+      "scene": "scene.json",
+      "source": "synthetic",
+      "trajectory": "collision.csv"
+    }
+  ]
+}
