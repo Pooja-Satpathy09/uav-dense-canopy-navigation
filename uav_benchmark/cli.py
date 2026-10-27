@@ -50,6 +50,13 @@ def parser():
     p.add_argument("--inputs", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--csv")
+    p = sub.add_parser(
+        "compare",
+        help="Compare compatible benchmark groups across difficulties",
+    )
+    p.add_argument("--inputs", required=True)
+    p.add_argument("--out", required=True)
+    p.add_argument("--csv")
     p = sub.add_parser("generate-scenes", help="Call the team's existing seeded scene generator")
     p.add_argument("--repo", default=".")
     p.add_argument("--out", required=True)
@@ -108,6 +115,16 @@ def main(argv=None):
             if args.csv:
                 export_csv(args.csv, results)
             print(args.out)
+        elif args.command == "compare":
+            from .comparison import compare_directory, export_comparison_csv
+
+            report = compare_directory(args.inputs)
+            dump_json(args.out, report)
+
+            if args.csv:
+                export_comparison_csv(args.csv, report)
+
+            print(f"Created {report['comparison_count']} comparison groups: {args.out}")
         elif args.command == "generate-scenes":
             if args.count < 1 or args.start_seed < 0:
                 raise ValueError("count must be positive; start-seed must be nonnegative")
