@@ -1,0 +1,139 @@
+{
+  "complete": true,
+  "config": {
+    "collision_tolerance_m": 1e-08,
+    "dt_s": 0.06666666666666667,
+    "goal_radius_m": 0.5,
+    "ground_z_m": -1.0,
+    "target_speed_mps": 2.0,
+    "timeout_s": 12.0,
+    "traversability_grid": 5,
+    "traversability_headings": 8,
+    "traversability_step_m": 0.1
+  },
+  "diagnostics": {
+    "duration_s": 11.999999999999977,
+    "final_goal_distance_m": 1.5768215856013117,
+    "initial_goal_distance_m": 20.0,
+    "min_ground_clearance_m": 0.4540406942367554,
+    "path_length_m": 21.715863096022325,
+    "sample_count": 181,
+    "scene": {
+      "altitude_m": 1.5,
+      "blocked_grid_positions": 4,
+      "grid_positions": 25,
+      "ray_count": 200
+    }
+  },
+  "difficulty": "hard",
+  "library_version": "0.1.0",
+  "metadata": {
+    "camera_angle_deg": 10,
+    "checkpoint_embedded_config_present": false,
+    "checkpoint_sha256": "055d492fde63df3121931c9b7d1650f80d9b15bb82facad1b828690a7d24e157",
+    "cuda": "12.8",
+    "drag_2": [
+      0,
+      0.375
+    ],
+    "gpu": "Tesla T4",
+    "integration_validation": "requires_user_gpu_validation",
+    "margin_m": 0.2,
+    "model_action_dimension": 6,
+    "model_state_dimension": 10,
+    "noise_seed": 43,
+    "noise_sigma": 0.0,
+    "noise_space": "normalized_inverse_depth_before_pooling",
+    "ongoing_disturbance": "seeded upstream dg process; not disabled",
+    "project_git": {
+      "commit": "3e438c195af2cfcc945feaf0e68d8c2e50fbd25e",
+      "dirty": true
+    },
+    "python": "3.13.15 (main, Aug  6 2026, 11:06:22) [GCC 13.3.0]",
+    "run_fingerprint": "a6f303e8d416e15517b37288d57e06bd5f50eb5ff8eb069f325430301f65f360",
+    "scene_hash": "0a996c21a8120c3a9c5d84cfd36c6142319e8c04cdd4ec2c20ff8088bb8f0fce",
+    "seed": 42,
+    "simulator_git": {
+      "commit": "271936190b5c2a5e760230e718fa6b167718a5bf",
+      "dirty": true
+    },
+    "software_fingerprint": "dc1fa84180d8e776ffa59300f6c9d5f71b9f0e33696b8df9916bc1dbf30febf2",
+    "source": "diffphys_cuda",
+    "torch": "2.11.0+cu128"
+  },
+  "metrics": {
+    "average_speed_mps": {
+      "note": "",
+      "status": "ok",
+      "unit": "m/s",
+      "value": 1.8096552580018639,
+      "version": "1.0"
+    },
+    "collision": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 0,
+      "version": "1.0"
+    },
+    "goal_success": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 0,
+      "version": "1.0"
+    },
+    "jerk_rms_mps3": {
+      "note": "Velocity differences; midpoint acceleration times; derivative-support weighting",
+      "status": "ok",
+      "unit": "m/s^3",
+      "value": 6.2656812289361525,
+      "version": "1.0"
+    },
+    "min_obstacle_clearance_m": {
+      "note": "Minimum on recorded piecewise-linear path",
+      "status": "ok",
+      "unit": "m",
+      "value": 0.12436666860512996,
+      "version": "1.0"
+    },
+    "path_excess_factor": {
+      "note": "Straight-line reference; incomplete flights can have negative values",
+      "status": "ok",
+      "unit": "1",
+      "value": 0.08579315480111616,
+      "version": "1.0"
+    },
+    "relative_end_distance": {
+      "note": "",
+      "status": "ok",
+      "unit": "1",
+      "value": 0.07884107928006559,
+      "version": "1.0"
+    },
+    "relative_gap_size": {
+      "note": "No geometry-verified designated passage",
+      "status": "not_applicable",
+      "unit": "1",
+      "value": null,
+      "version": "1.0"
+    },
+    "speed_rmse_mps": {
+      "note": "Right-endpoint time weighting; constant commanded speed magnitude",
+      "status": "ok",
+      "unit": "m/s",
+      "value": 0.6439437184555236,
+      "version": "1.0"
+    },
+    "traversability": {
+      "note": "Fixed-altitude XY grid/rays; blocked origins contribute zero",
+      "status": "ok",
+      "unit": "1",
+      "value": 7.130084943819043,
+      "version": "1.0"
+    }
+  },
+  "scene_id": "hard_seed_42",
+  "schema_version": "1.0",
+  "termination": "timeout"
+}
