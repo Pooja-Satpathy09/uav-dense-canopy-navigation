@@ -55,6 +55,8 @@ class MetricTests(unittest.TestCase):
         self.assertEqual(result["termination"], "timeout")
         self.assertEqual(values(result)["average_speed_mps"], 0)
         self.assertEqual(values(result)["speed_rmse_mps"], 2)
+        self.assertEqual(result["diagnostics"]["closest_sampled_goal_distance_m"], 10)
+        self.assertEqual(result["diagnostics"]["closest_sampled_goal_time_s"], 0)
 
     def test_zero_duration(self):
         result = evaluate_run(straight()[:1], scene(), CONFIG)
