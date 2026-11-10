@@ -35,6 +35,7 @@ def compare_results(results):
             "runs": group["runs"],
             "eligible_runs": group["eligible_runs"],
             "incomplete_or_numerical": group["incomplete_or_numerical"],
+            "termination_counts": group["termination_counts"],
             "scene_clusters": group["scene_clusters"],
             "metrics": group["metrics"],
         }

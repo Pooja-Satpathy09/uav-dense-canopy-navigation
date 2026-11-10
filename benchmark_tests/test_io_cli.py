@@ -4,6 +4,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from uav_benchmark import Sample
 from uav_benchmark.aggregate import summarize, wilson
 from uav_benchmark.batch import evaluate_manifest
 from uav_benchmark.demo import demo
@@ -57,12 +58,16 @@ class StatisticsTests(unittest.TestCase):
         self.assertLess(lo, 1)
         self.assertAlmostEqual(hi, 1)
 
-    def test_incomplete_runs_excluded_from_rates(self):
+    def test_incomplete_and_numerical_failures_excluded_from_rates(self):
         success = evaluate_run(straight(), scene(), CONFIG, metadata={"source": "synthetic"})
         partial = evaluate_run(straight()[:3], scene(), CONFIG, metadata={"source": "synthetic"})
-        group = summarize([success, partial])["groups"][0]
+        numerical = dict(partial, termination="numerical_failure")
+        group = summarize([success, partial, numerical])["groups"][0]
         self.assertEqual(group["eligible_runs"], 1)
-        self.assertEqual(group["incomplete_or_numerical"], 1)
+        self.assertEqual(group["incomplete_or_numerical"], 2)
+        self.assertEqual(group["termination_counts"], {
+            "goal_reached": 1, "incomplete": 1, "numerical_failure": 1,
+        })
         self.assertEqual(group["metrics"]["goal_success"]["mean"], 1)
 
     def test_duplicate_runs_rejected(self):
@@ -98,6 +103,44 @@ class CliTests(unittest.TestCase):
                 "--out", str(Path(tmp)/"evaluated.json"))
             self.assertEqual(process.returncode, 0, process.stderr)
             self.assertEqual(load_json(Path(tmp)/"evaluated.json")["termination"], "goal_reached")
+
+    def test_medium_near_goal_boundary_exit(self):
+        root = Path(__file__).resolve().parents[1]
+        scene_path = root/"scenes/medium_seed_42.json"
+        medium = load_json(scene_path)
+        # Hand-built geometry fixture on the checked-in medium scene.
+        positions = [tuple(medium["start"]), (0, -6.5, 5.5), (20, -6.5, 5.5),
+                     (19.5, .75, 1.5), (20.9, .75, 1.5)]
+        samples = [Sample(t, p, (0, 0, 0)) for t, p in enumerate(positions)]
+        with tempfile.TemporaryDirectory() as tmp:
+            folder = Path(tmp)
+            trajectory = folder/"trajectory.csv"
+            output = folder/"medium.metrics.json"
+            save_trajectory(trajectory, samples, medium, "synthetic_medium_exit")
+            process = self.invoke("evaluate", "--trajectory", str(trajectory),
+                                  "--scene", str(scene_path), "--source", "synthetic",
+                                  "--out", str(output))
+            self.assertEqual(process.returncode, 0, process.stderr)
+            result = load_json(output)
+            summary = folder/"summary.json"
+            process = self.invoke("summarize", "--inputs", str(folder), "--out", str(summary))
+            self.assertEqual(process.returncode, 0, process.stderr)
+            group = load_json(summary)["groups"][0]
+
+        self.assertEqual(result["difficulty"], "medium")
+        self.assertEqual(result["termination"], "out_of_bounds")
+        self.assertEqual(len(result["metrics"]), 10)
+        self.assertEqual(result["metrics"]["goal_success"]["value"], 0)
+        self.assertEqual(result["metrics"]["collision"]["value"], 0)
+        self.assertGreater(result["metrics"]["min_obstacle_clearance_m"]["value"], 0)
+        self.assertEqual(result["metrics"]["relative_gap_size"]["status"], "not_applicable")
+        diagnostics = result["diagnostics"]
+        # The segment passes 0.75 m from the goal. The closest logged point is farther.
+        self.assertAlmostEqual(diagnostics["closest_sampled_goal_distance_m"], (.5**2 + .75**2)**.5)
+        self.assertEqual(diagnostics["closest_sampled_goal_time_s"], 3)
+        self.assertAlmostEqual(diagnostics["final_goal_distance_m"], (.9**2 + .75**2)**.5)
+        self.assertEqual(group["termination_counts"], {"out_of_bounds": 1})
+        self.assertEqual(group["eligible_runs"], 1)
 
     def test_offline_batch_and_summary(self):
         with tempfile.TemporaryDirectory() as tmp:

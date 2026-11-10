@@ -3,7 +3,7 @@ import math
 import json
 import random
 import statistics
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 
 def wilson(values):
@@ -89,6 +89,7 @@ def summarize(results):
             metrics[name] = item
         groups.append({"condition": json.loads(key), "runs": len(runs),
                        "eligible_runs": len(eligible), "incomplete_or_numerical": len(runs)-len(eligible),
+                       "termination_counts": dict(Counter(r["termination"] for r in runs)),
                        "scene_clusters": len({r["metadata"].get("scene_hash", r["scene_id"]) for r in eligible}),
                        "metrics": metrics})
     return {"schema_version": "1.0", "groups": groups,

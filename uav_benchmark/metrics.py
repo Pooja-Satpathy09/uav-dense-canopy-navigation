@@ -12,7 +12,11 @@ def flight_context(samples, scene, config):
     obstacle_clearance = path_clearance(positions, scene["drone_radius"], scene["obstacles"])
     ground_clearance = min(p[2]-scene["drone_radius"]-scene["ground_z_m"] for p in positions)
     collision = any(s.collision for s in samples) or min(obstacle_clearance, ground_clearance) <= config.collision_tolerance_m
-    final_distance = math.dist(positions[-1], scene["goal"])
+    goal = scene["goal"]
+    final_distance = math.dist(positions[-1], goal)
+    closest_goal_distance, closest_goal_time = min(
+        (math.dist(sample.position, goal), sample.time) for sample in samples
+    )
     reached = final_distance <= config.goal_radius_m
     if samples[-1].reached_goal and not reached:
         raise ValueError("Goal flag conflicts with final geometric goal distance")
@@ -23,7 +27,9 @@ def flight_context(samples, scene, config):
                    "goal_reached" if reached else "timeout" if duration >= config.timeout_s-1e-6 else "incomplete")
     return {"samples": samples, "scene": scene, "config": config, "duration": duration,
             "path_length": sum(math.dist(a, b) for a, b in zip(positions, positions[1:])),
-            "initial_distance": math.dist(positions[0], scene["goal"]), "final_distance": final_distance,
+            "initial_distance": math.dist(positions[0], goal), "final_distance": final_distance,
+            "closest_sampled_goal_distance": closest_goal_distance,
+            "closest_sampled_goal_time": closest_goal_time,
             "obstacle_clearance": obstacle_clearance, "ground_clearance": ground_clearance,
             "termination": termination}
 
@@ -51,5 +57,7 @@ def evaluate_run(samples, scene, config=None, *, include_scene_metrics=True, met
             "metadata": dict(metadata or {}), "metrics": metrics,
             "diagnostics": {"duration_s": context["duration"], "path_length_m": context["path_length"],
                             "initial_goal_distance_m": context["initial_distance"], "final_goal_distance_m": context["final_distance"],
+                            "closest_sampled_goal_distance_m": context["closest_sampled_goal_distance"],
+                            "closest_sampled_goal_time_s": context["closest_sampled_goal_time"],
                             "min_ground_clearance_m": context["ground_clearance"], "sample_count": len(samples),
                             "scene": scene_evaluation["diagnostics"] if scene_evaluation else {}}}

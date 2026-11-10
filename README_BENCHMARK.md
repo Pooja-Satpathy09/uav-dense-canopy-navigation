@@ -50,5 +50,21 @@ Output paths are created exclusively to protect earlier results. Choose a new
 output name if rerunning a command. CUDA experiments additionally support
 `--resume`, which verifies configuration, source, checkpoint and scene identities.
 
+## Diagnose medium-scene failures
+
+For a saved flight, check `termination` and compare
+`diagnostics.closest_sampled_goal_distance_m` with `diagnostics.final_goal_distance_m`.
+`diagnostics.closest_sampled_goal_time_s` locates the closest recorded point in
+the trajectory CSV. Ties use the earliest timestamp. An out-of-bounds flight
+counts as a completed navigation failure. See `metrics.min_obstacle_clearance_m`
+in the same result for the existing piecewise-linear clearance measurement.
+
+The JSON from `summarize` (also written by `experiment`) and `compare` reports
+`termination_counts` for each compatible group and difficulty, including
+incomplete and numerical-failure records. Older result files contribute their
+recorded terminations. To compute the closest distance for an older flight,
+re-evaluate its trajectory with the original scene and configuration and save to
+a new file.
+
 See benchmark_docs/METRIC_SPEC.md for formulas and limitations, and
 benchmark_docs/EXTENDING.md for teammate responsibilities and extension examples.

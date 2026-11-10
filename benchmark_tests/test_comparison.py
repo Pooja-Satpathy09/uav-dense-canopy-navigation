@@ -91,6 +91,11 @@ class ComparisonTests(unittest.TestCase):
 
             report = json.loads(json_out.read_text())
             self.assertEqual(report["comparison_count"], 1)
+            group = report["comparisons"][0]["by_difficulty"]["synthetic"]
+            self.assertEqual(group["termination_counts"], {
+                "collision": 1, "goal_reached": 1, "incomplete": 1, "timeout": 1,
+            })
+            self.assertEqual(group["eligible_runs"], 3)
 
             with csv_out.open(
                 newline="", encoding="utf-8"
@@ -100,6 +105,13 @@ class ComparisonTests(unittest.TestCase):
             self.assertGreater(len(rows), 0)
             self.assertIn("difficulty", rows[0])
             self.assertIn("metric", rows[0])
+
+    def test_legacy_results_can_be_compared(self):
+        legacy = Path(__file__).resolve().parents[1]/"examples/synthetic_demo/timeout.metrics.json"
+        result = load_json(legacy)
+        report = compare_results([result])
+        group = report["comparisons"][0]["by_difficulty"]["synthetic"]
+        self.assertEqual(group["termination_counts"], {"timeout": 1})
 
 
 if __name__ == "__main__":
