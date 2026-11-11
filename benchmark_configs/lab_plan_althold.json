@@ -1,0 +1,11 @@
+{
+  "config": "eval_24s.json",
+  "scene_glob": "benchmark_scenes_ground/*_seed_*.json",
+  "speeds_mps": [2.0, 4.0],
+  "noise_sigmas": [0.0],
+  "seeds": [42],
+  "camera_angle_deg": 20,
+  "allow_unverified_simulator": true,
+  "altitude_hold_kp": 10,
+  "altitude_hold_kd": 5
+}

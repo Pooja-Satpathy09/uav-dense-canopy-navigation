@@ -1,0 +1,9 @@
+A = released_base_fov82   B = ours_50k_fov82   (same scenes, paired)
+group           n | success A success B       p | goal A goal B | collide A collide B
+easy 2.0       30 |      0.97      1.00   1.000 |   0.77   0.57 |         0         0
+easy 4.0       30 |      1.00      1.00   1.000 |   0.40   0.20 |         0         0
+hard 2.0       30 |      0.93      0.93   1.000 |   0.57   0.47 |         2         2
+hard 4.0       30 |      1.00      0.90   0.250 |   0.20   0.23 |         0         3
+medium 2.0     30 |      0.97      0.97   1.000 |   0.70   0.60 |         1         1
+medium 4.0     30 |      1.00      0.97   1.000 |   0.37   0.33 |         0         1
+ALL           180 |      0.98      0.96   0.508 |   0.50   0.40 |         3         7

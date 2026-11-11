@@ -1,0 +1,8 @@
+success = reached goal sphere or goal plane with no collision
+checkpoint             easy  medium   hard | all (95% CI)           goal sphere collisions
+ours_10k_fov82         1.00    0.97   0.92 | 0.96 [0.92, 0.98] (173/180)     0.28          7
+ours_20k_fov82         1.00    0.93   0.95 | 0.96 [0.92, 0.98] (173/180)     0.34          6
+ours_30k_fov82         1.00    0.95   0.87 | 0.94 [0.89, 0.97] (169/180)     0.50         11
+ours_40k_fov82         1.00    1.00   0.93 | 0.98 [0.94, 0.99] (176/180)     0.26          4
+ours_50k_fov82         1.00    0.97   0.92 | 0.96 [0.92, 0.98] (173/180)     0.40          7
+released_base_fov82    0.98    0.98   0.97 | 0.98 [0.94, 0.99] (176/180)     0.50          3

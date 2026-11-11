@@ -75,6 +75,9 @@ def parser():
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--noise-sigma", type=float, default=0)
     p.add_argument("--camera-angle-deg", type=float, default=10)
+    p.add_argument("--altitude-hold-kp", type=float, default=0.0)
+    p.add_argument("--altitude-hold-kd", type=float, default=0.0)
+    p.add_argument("--fov-x-half-tan", type=float, default=0.53)
     p.add_argument("--allow-unverified-simulator", action="store_true")
     p.add_argument("--out", required=True)
     p = sub.add_parser("experiment", help="Run a resumable CUDA experiment matrix")
@@ -146,7 +149,9 @@ def main(argv=None):
                 raise FileExistsError("Run output already exists; choose a new directory")
             samples, scene, result = run_diffphys(args.repo, args.checkpoint, args.scene, load_config(args.config),
                 seed=args.seed, noise_sigma=args.noise_sigma, camera_angle_deg=args.camera_angle_deg,
-                allow_unverified_simulator=args.allow_unverified_simulator)
+                allow_unverified_simulator=args.allow_unverified_simulator,
+                altitude_hold_kp=args.altitude_hold_kp, altitude_hold_kd=args.altitude_hold_kd,
+                fov_x_half_tan=args.fov_x_half_tan)
             output.mkdir(parents=True)
             save_trajectory(output/"trajectory.csv", samples, scene, output.name)
             dump_json(output/"scene.json", scene)

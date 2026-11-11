@@ -17,6 +17,14 @@ from .validation import validate_config, validate_scene
 PINNED_SIMULATOR = "271936190b5c2a5e760230e718fa6b167718a5bf"
 
 
+def altitude_hold_correction(z, vz, target_z, kp, kd, limit=8.0):
+    """PD vertical acceleration [m/s^2] towards target_z, clamped to +/-limit."""
+    correction = kp*(target_z-z)-kd*vz
+    if hasattr(correction, "clamp"):
+        return correction.clamp(-limit, limit)
+    return max(-limit, min(limit, correction))
+
+
 def load_module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
     if spec is None or spec.loader is None:
@@ -41,7 +49,8 @@ def load_bridge(repo):
 
 
 def run_diffphys(repo, checkpoint, scene_path, config, *, seed=42, noise_sigma=0.0,
-                 camera_angle_deg=10, allow_unverified_simulator=False):
+                 camera_angle_deg=10, allow_unverified_simulator=False,
+                 altitude_hold_kp=0.0, altitude_hold_kd=0.0, fov_x_half_tan=0.53):
     import torch
     import numpy as np
     import torch.nn.functional as F
@@ -51,6 +60,10 @@ def run_diffphys(repo, checkpoint, scene_path, config, *, seed=42, noise_sigma=0
         raise ValueError("seed must be an integer in [0, 2**32)")
     if not math.isfinite(noise_sigma) or noise_sigma < 0:
         raise ValueError("noise_sigma must be finite and nonnegative")
+    if not all(math.isfinite(g) and g >= 0 for g in (altitude_hold_kp, altitude_hold_kd)):
+        raise ValueError("altitude hold gains must be finite and nonnegative")
+    if not (math.isfinite(fov_x_half_tan) and fov_x_half_tan > 0):
+        raise ValueError("fov_x_half_tan must be finite and positive")
     if not math.isfinite(camera_angle_deg):
         raise ValueError("Camera angle must be finite")
     if not torch.cuda.is_available():
@@ -91,7 +104,7 @@ def run_diffphys(repo, checkpoint, scene_path, config, *, seed=42, noise_sigma=0
     model.load_state_dict(state, strict=True)
     model.eval()
     # batch_size=1 and single=True avoid inter-drone rendering/collision effects.
-    env = Env(1, 64, 48, .4, device, single=True, cam_angle=camera_angle_deg)
+    env = Env(1, 64, 48, .4, device, fov_x_half_tan=fov_x_half_tan, single=True, cam_angle=camera_angle_deg)
     env.reset()
     load_bridge(repo).load_scene_into_env(env, scene_path, target_speed=config.target_speed_mps)
     # Freeze the reset-time drag distribution; ongoing dg noise remains seeded.
@@ -158,6 +171,9 @@ def run_diffphys(repo, checkpoint, scene_path, config, *, seed=42, noise_sigma=0
                 break
             a_pred, v_pred = (rotation@action.reshape(1, 3, 2)).unbind(-1)
             control = (a_pred-v_pred-env.g_std)*env.thr_est_error[:, None]+env.g_std
+            if altitude_hold_kp or altitude_hold_kd:
+                control[:, 2] = control[:, 2]+altitude_hold_correction(
+                    env.p[:, 2], env.v[:, 2], env.p_target[:, 2], altitude_hold_kp, altitude_hold_kd)
             action_buffer.append(control)
     metadata = {"source": "diffphys_cuda", "integration_validation": "requires_user_gpu_validation",
                 "checkpoint_sha256": file_hash(checkpoint), "scene_hash": fingerprint(scene),
@@ -169,6 +185,8 @@ def run_diffphys(repo, checkpoint, scene_path, config, *, seed=42, noise_sigma=0
                 "software_fingerprint": software_fingerprint(repo),
                 "python": sys.version, "torch": str(torch.__version__), "cuda": torch.version.cuda,
                 "gpu": torch.cuda.get_device_name(0), "drag_2": [0, .375], "margin_m": .2,
+                "altitude_hold_kp": altitude_hold_kp, "altitude_hold_kd": altitude_hold_kd,
+                "fov_x_half_tan": fov_x_half_tan,
                 "ongoing_disturbance": "seeded upstream dg process; not disabled"}
     metadata["run_fingerprint"] = fingerprint({"metadata": metadata, "config": config.to_dict()})
     result = evaluate_run(records, scene, config, metadata=metadata)
