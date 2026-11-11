@@ -50,7 +50,11 @@ def experiment(repo, checkpoint, plan_path, output, *, resume=False):
         try:
             samples, normalized_scene, result = run_diffphys(repo, checkpoint, scene,
                 replace(config, target_speed_mps=speed), seed=seed, noise_sigma=noise,
-                camera_angle_deg=plan.get("camera_angle_deg", 10))
+                camera_angle_deg=plan.get("camera_angle_deg", 10),
+                allow_unverified_simulator=plan.get("allow_unverified_simulator", False),
+                altitude_hold_kp=plan.get("altitude_hold_kp", 0.0),
+                altitude_hold_kd=plan.get("altitude_hold_kd", 0.0),
+                fov_x_half_tan=plan.get("fov_x_half_tan", 0.53))
             save_trajectory(attempt/"trajectory.csv", samples, normalized_scene, f"run_{i:05d}")
             dump_json(attempt/"scene.json", normalized_scene)
             result["metadata"]["raw_data_directory"] = str(attempt.relative_to(output))

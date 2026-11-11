@@ -1,0 +1,9 @@
+A = ours_50k   B = ours_50k_althold   (same scenes, paired)
+group           n | success A success B       p | goal A goal B | collide A collide B
+easy 2.0       30 |      0.93      1.00   0.500 |   0.00   0.60 |         2         0
+easy 4.0       30 |      0.97      0.93   1.000 |   0.00   0.43 |         1         2
+hard 2.0       30 |      0.73      0.77   1.000 |   0.00   0.43 |         7         7
+hard 4.0       30 |      0.83      0.67   0.125 |   0.03   0.20 |         5        10
+medium 2.0     30 |      0.87      0.90   1.000 |   0.00   0.50 |         4         3
+medium 4.0     30 |      0.90      0.87   1.000 |   0.00   0.40 |         3         4
+ALL           180 |      0.87      0.86   0.711 |   0.01   0.43 |        22        26
