@@ -33,7 +33,6 @@ def experiment(repo, checkpoint, plan_path, output, *, resume=False):
         output.mkdir(parents=True)
         dump_json(output/"experiment.json", {"fingerprint": identity, **manifest})
     results = []
-    errors = []
     for i, (scene, speed, noise, seed) in enumerate(conditions):
         run_dir = output/f"run_{i:05d}"
         result_path = run_dir/"result.metrics.json"
@@ -63,11 +62,28 @@ def experiment(repo, checkpoint, plan_path, output, *, resume=False):
             results.append(result)
             print(f"{i+1}/{len(conditions)} {scene.stem}: {result['termination']}", flush=True)
         except Exception as error:
-            failure = {"index": i, "scene": str(scene), "speed_mps": speed, "noise_sigma": noise,
-                       "seed": seed, "exception_type": type(error).__name__, "message": str(error)}
+            failure = {
+                "index": i,
+                "scene": str(scene),
+                "speed_mps": speed,
+                "noise_sigma": noise,
+                "seed": seed,
+                "exception_type": type(error).__name__,
+                "message": str(error),
+                "attempt_directory": str(attempt.relative_to(output)),
+            }
             dump_json(attempt/"error.json", failure)
-            errors.append(failure)
             print(f"{i+1}/{len(conditions)} ERROR: {error}", flush=True)
+    # Recover failure history from every attempt, including previous resumes.
+    errors = []
+
+    for error_path in sorted(output.glob("run_*/error.json")):
+        failure = load_json(error_path)
+        failure.setdefault(
+            "attempt_directory",
+            str(error_path.parent.relative_to(output))
+        )
+        errors.append(failure)
     report = summarize(results)
     report["attempt_errors"] = errors
     report["planned_runs"] = len(conditions)
