@@ -54,6 +54,35 @@ class ExperimentTests(unittest.TestCase):
             self.assertTrue((root/"results/run_00000/error.json").exists())
             self.assertTrue((root/"results/run_00000_attempt_1/trajectory.csv").exists())
 
+    def test_failure_history_preserved_after_successful_resume(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, checkpoint = self.setup_case(tmp)
+
+            with patch(
+                "uav_benchmark.experiment.run_diffphys",
+                side_effect=RuntimeError("mock CUDA failure")
+            ):
+                experiment(root, checkpoint, root/"plan.json", root/"results")
+
+            with patch(
+                "uav_benchmark.experiment.run_diffphys",
+                side_effect=self.fake_rollout
+            ):
+                report = experiment(
+                    root, checkpoint, root/"plan.json",
+                    root/"results", resume=True
+                )
+
+            self.assertEqual(len(report["attempt_errors"]), 1)
+            self.assertEqual(
+                report["attempt_errors"][0]["exception_type"],
+                "RuntimeError"
+            )
+            self.assertEqual(
+                report["attempt_errors"][0]["attempt_directory"],
+                "run_00000"
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
