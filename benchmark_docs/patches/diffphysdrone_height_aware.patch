@@ -1,0 +1,87 @@
+diff --git a/env_cuda.py b/env_cuda.py
+index a894de3..7815695 100644
+--- a/env_cuda.py
++++ b/env_cuda.py
+@@ -43,7 +43,7 @@ run = RunFunction.apply
+ class Env:
+     def __init__(self, batch_size, width, height, grad_decay, device='cpu', fov_x_half_tan=0.53,
+                  single=False, gate=False, ground_voxels=False, scaffold=False, speed_mtp=1,
+-                 random_rotation=False, cam_angle=10) -> None:
++                 random_rotation=False, cam_angle=10, target_dz=0.0) -> None:
+         self.device = device
+         self.batch_size = batch_size
+         self.width = width
+@@ -87,6 +87,7 @@ class Env:
+         ], device=device).repeat(batch_size // 8 + 7, 1)[:batch_size]
+         self.flow = torch.empty((batch_size, 0, height, width), device=device)
+         self.single = single
++        self.target_dz = target_dz
+         self.gate = gate
+         self.ground_voxels = ground_voxels
+         self.scaffold = scaffold
+@@ -196,6 +197,10 @@ class Env:
+             torch.rand_like(scale) - 0.5], -1)
+         self.p = self.p_init * scale + torch.randn_like(scale) * 0.1
+         self.p_target = self.p_end * scale + torch.randn_like(scale) * 0.1
++        if self.target_dz > 0:
++            dz = (torch.rand((B, 1), device=device) * 2 - 1) * self.target_dz
++            self.p_target = torch.cat([self.p_target[:, :2],
++                                       (self.p_target[:, 2:] + dz).clamp(-0.6, 1.5)], -1)
+ 
+         if self.random_rotation:
+             yaw_bias = torch.rand(B//self.n_drones_per_group, device=device).repeat_interleave(self.n_drones_per_group, 0) * 1.5 - 0.75
+diff --git a/main_cuda.py b/main_cuda.py
+index 2911b85..a0cd02e 100644
+--- a/main_cuda.py
++++ b/main_cuda.py
+@@ -34,6 +34,12 @@ parser.add_argument('--speed_mtp', type=float, default=1.0)
+ parser.add_argument('--fov_x_half_tan', type=float, default=0.53)
+ parser.add_argument('--timesteps', type=int, default=150)
+ parser.add_argument('--cam_angle', type=int, default=10)
++parser.add_argument('--ground_affinity_fix', action='store_true',
++                    help='multiply (not add) coef_ground_affinity and the ground-affinity loss')
++parser.add_argument('--coef_height', type=float, default=0.0,
++                    help='weight of the ramped height-tracking loss (0 = off)')
++parser.add_argument('--target_dz', type=float, default=0.0,
++                    help='random target height offset U(-dz, dz) in metres (0 = upstream)')
+ parser.add_argument('--single', default=False, action='store_true')
+ parser.add_argument('--gate', default=False, action='store_true')
+ parser.add_argument('--ground_voxels', default=False, action='store_true')
+@@ -47,7 +53,7 @@ print(args)
+ 
+ device = torch.device('cuda')
+ 
+-env = Env(args.batch_size, 64, 48, args.grad_decay, device,
++env = Env(args.batch_size, 64, 48, args.grad_decay, device, target_dz=args.target_dz,
+           fov_x_half_tan=args.fov_x_half_tan, single=args.single,
+           gate=args.gate, ground_voxels=args.ground_voxels,
+           scaffold=args.scaffold, speed_mtp=args.speed_mtp,
+@@ -166,6 +172,9 @@ for i in pbar:
+ 
+     p_history = torch.stack(p_history)
+     loss_ground_affinity = p_history[..., 2].relu().pow(2).mean()
++    height_ramp = torch.linspace(0, 1, p_history.shape[0], device=p_history.device)[:, None]
++    loss_height = (height_ramp * F.smooth_l1_loss(
++        p_history[..., 2], env.p_target[None, :, 2].expand_as(p_history[..., 2]), reduction='none')).mean()
+     act_buffer = torch.stack(act_buffer)
+ 
+     v_history = torch.stack(v_history)
+@@ -210,7 +219,9 @@ for i in pbar:
+         args.coef_speed * loss_speed + \
+         args.coef_v_pred * loss_v_pred + \
+         args.coef_collide * loss_collide + \
+-        args.coef_ground_affinity + loss_ground_affinity
++        (args.coef_ground_affinity * loss_ground_affinity if args.ground_affinity_fix
++         else args.coef_ground_affinity + loss_ground_affinity) + \
++        args.coef_height * loss_height
+ 
+     if torch.isnan(loss):
+         print("loss is nan, exiting...")
+@@ -239,6 +250,7 @@ for i in pbar:
+             'loss_speed': loss_speed,
+             'loss_collide': loss_collide,
+             'loss_ground_affinity': loss_ground_affinity,
++            'loss_height': loss_height,
+             'success': _success,
+             'max_speed': speed_history.max(0).values.mean(),
+             'avg_speed': avg_speed.mean(),
