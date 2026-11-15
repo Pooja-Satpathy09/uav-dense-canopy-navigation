@@ -1,0 +1,7 @@
+difficulty,speed_mps,flights,safe,exact_goal,collisions,plane_only
+easy,2.0,30,30,17,0,13
+easy,4.0,30,30,6,0,24
+hard,2.0,30,28,14,2,14
+hard,4.0,30,27,7,3,20
+medium,2.0,30,29,18,1,11
+medium,4.0,30,29,10,1,19
