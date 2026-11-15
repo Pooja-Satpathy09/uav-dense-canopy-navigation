@@ -1,0 +1,25 @@
+A,B,metric,unit,better,n_pairs,mean_A,mean_B,test,p,p_holm
+ft_height_fov82,ft_hloss2_fov82,goal_success,rate,higher,180,0.5166666666666667,0.5555555555555556,"McNemar (A only 8, B only 15)",0.21003961563110352,0.6301188468933105
+ft_height_fov82,ft_hloss2_fov82,collision,rate,lower,180,0.016666666666666666,0.022222222222222223,"McNemar (A only 2, B only 3)",1.0,1.0
+ft_height_fov82,ft_hloss2_fov82,min_obstacle_clearance_m,m,higher,180,0.4289905388198835,0.40467698130546087,Wilcoxon signed-rank,0.14352996342267058,0.5741198536906823
+ft_height_fov82,ft_hloss2_fov82,path_excess_factor,1,lower,180,0.028893616666724103,0.03609095176103057,Wilcoxon signed-rank,0.0008962045793585883,0.006273432055510118
+ft_height_fov82,ft_hloss2_fov82,average_speed_mps,m/s,,180,2.6152166795971317,2.6365437712321564,Wilcoxon signed-rank,0.10251919964178442,0.5125959982089221
+ft_height_fov82,ft_hloss2_fov82,relative_end_distance,1,lower,180,0.06327942280358347,0.056594663833619364,Wilcoxon signed-rank,0.9248865916992202,1.0
+ft_height_fov82,ft_hloss2_fov82,speed_rmse_mps,m/s,lower,180,1.0983239871192607,1.0586663559287817,Wilcoxon signed-rank,3.6768502574099685e-05,0.0002941480205927975
+ft_height_fov82,ft_hloss2_fov82,jerk_rms_mps3,m/s^3,lower,180,5.568438846917515,5.757254506974462,Wilcoxon signed-rank,0.0033143558756064955,0.019886135253638974
+ft_height_fov82,ft_hloss5_fov82,goal_success,rate,higher,180,0.5166666666666667,0.5222222222222223,"McNemar (A only 16, B only 17)",1.0,1.0
+ft_height_fov82,ft_hloss5_fov82,collision,rate,lower,180,0.016666666666666666,0.027777777777777776,"McNemar (A only 2, B only 4)",0.6875,1.0
+ft_height_fov82,ft_hloss5_fov82,min_obstacle_clearance_m,m,higher,180,0.4289905388198835,0.36880408989519725,Wilcoxon signed-rank,1.2277521479638549e-05,7.366512887783129e-05
+ft_height_fov82,ft_hloss5_fov82,path_excess_factor,1,lower,180,0.028893616666724103,0.0337714850011974,Wilcoxon signed-rank,0.5352817349130325,1.0
+ft_height_fov82,ft_hloss5_fov82,average_speed_mps,m/s,,180,2.6152166795971317,2.6226711657366475,Wilcoxon signed-rank,0.6997250427807944,1.0
+ft_height_fov82,ft_hloss5_fov82,relative_end_distance,1,lower,180,0.06327942280358347,0.054958865687571815,Wilcoxon signed-rank,0.9294266453618292,1.0
+ft_height_fov82,ft_hloss5_fov82,speed_rmse_mps,m/s,lower,180,1.0983239871192607,1.0653422373125532,Wilcoxon signed-rank,3.0622931107186704e-09,2.4498344885749363e-08
+ft_height_fov82,ft_hloss5_fov82,jerk_rms_mps3,m/s^3,lower,180,5.568438846917515,5.843318148668629,Wilcoxon signed-rank,1.1840606249538926e-06,8.288424374677248e-06
+released_base_fov82,ft_hloss2_fov82,goal_success,rate,higher,180,0.49444444444444446,0.5555555555555556,"McNemar (A only 9, B only 20)",0.06142834573984146,0.18428503721952438
+released_base_fov82,ft_hloss2_fov82,collision,rate,lower,180,0.016666666666666666,0.022222222222222223,"McNemar (A only 3, B only 4)",1.0,1.0
+released_base_fov82,ft_hloss2_fov82,min_obstacle_clearance_m,m,higher,180,0.3898203229840845,0.40467698130546087,Wilcoxon signed-rank,1.7321050660921234e-05,8.660525330460617e-05
+released_base_fov82,ft_hloss2_fov82,path_excess_factor,1,lower,180,0.043934423321605916,0.03609095176103057,Wilcoxon signed-rank,9.129442150676407e-12,6.390609505473485e-11
+released_base_fov82,ft_hloss2_fov82,average_speed_mps,m/s,,180,2.6906998466731182,2.6365437712321564,Wilcoxon signed-rank,9.720878682456431e-10,5.832527209473858e-09
+released_base_fov82,ft_hloss2_fov82,relative_end_distance,1,lower,180,0.0633230701883427,0.056594663833619364,Wilcoxon signed-rank,0.0011723473759990934,0.004689389503996374
+released_base_fov82,ft_hloss2_fov82,speed_rmse_mps,m/s,lower,180,1.0478386884493724,1.0586663559287817,Wilcoxon signed-rank,0.07462659363059995,0.18428503721952438
+released_base_fov82,ft_hloss2_fov82,jerk_rms_mps3,m/s^3,lower,180,7.724417861404098,5.757254506974462,Wilcoxon signed-rank,5.774193776645222e-26,4.619355021316177e-25

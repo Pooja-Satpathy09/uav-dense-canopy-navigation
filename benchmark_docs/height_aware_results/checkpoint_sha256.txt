@@ -1,0 +1,7 @@
+# SHA-256 of the fine-tuned models (not in the repository; derived from the authors' released weights)
+# All fine-tuned for 1,200 iterations from released_base.pth on a Colab Tesla T4.
+81418565033e09a7c2c8242c585c8e8cb4413051fb1a2fecce09499458afa4d3  released_base.pth  (authors' v1.0 release, same file as lab_results/checkpoint_sha256.txt)
+f7de864be991c9cde8888531deb15ed1d9dc20bbbe436e9c8b1b18dc2dcd4570  ft_fix.pth     --ground_affinity_fix
+ff1e966324f20c6d5ff464b04298829564350609b4508e144a6a8cef4a287dee  ft_height.pth  --ground_affinity_fix --target_dz 1.0
+bbb1326fe69e2f77e2120f700cbd8ad9c9f875a3428f1cc089282607f2c67c27  ft_hloss2.pth  --ground_affinity_fix --target_dz 1.0 --coef_height 2.0
+e124383d500844cb3016273a33c406e0350d59d2f326061fa787f030adc66792  ft_hloss5.pth  --ground_affinity_fix --target_dz 1.0 --coef_height 5.0

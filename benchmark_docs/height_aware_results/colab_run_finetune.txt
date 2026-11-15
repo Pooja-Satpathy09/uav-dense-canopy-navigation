@@ -1,0 +1,273 @@
+Colab run: GPU Tesla T4, torch 2.14.1+cu130, team repo 91d186a, DiffPhysDrone 2719361 + PyTorch patch
+
+##### Height-change test (novelty)
+$ python /content/uav/lab_tools/height_table.py released_base_height ft_fix_height ft_height_height --pair ft_fix_height ft_height_height --pair released_base_height ft_height_height --pair released_base_height ft_fix_height
+Goal 0.6 m above (up) or below (down) the start. Height error = z - goal z at the goal plane.
+checkpoint             goal     n | goal-sphere success     safe  coll | median height err median |err|
+released_base_height   up      90 | 0.00 [0.00, 0.04]        0.97     2 |           -0.75 m       0.75 m
+released_base_height   down    90 | 0.54 [0.44, 0.64]        0.93     6 |           +0.24 m       0.24 m
+released_base_height   all    180 | 0.27 [0.21, 0.34]        0.95     8 |           -0.60 m       0.60 m
+
+ft_fix_height          up      90 | 0.39 [0.29, 0.49]        0.98     0 |           -0.34 m       0.34 m
+ft_fix_height          down    90 | 0.11 [0.06, 0.19]        0.97     2 |           +0.54 m       0.54 m
+ft_fix_height          all    180 | 0.25 [0.19, 0.32]        0.97     2 |           +0.32 m       0.45 m
+
+ft_height_height       up      90 | 0.11 [0.06, 0.19]        0.99     0 |           -0.46 m       0.46 m
+ft_height_height       down    90 | 0.07 [0.03, 0.14]        0.96     3 |           +0.51 m       0.51 m
+ft_height_height       all    180 | 0.09 [0.06, 0.14]        0.97     3 |           +0.03 m       0.48 m
+
+Paired goal-sphere success: A = ft_fix_height, B = ft_height_height
+  up    n= 90  A 0.39  B 0.11  (A only 26, B only 1)  exact McNemar p = 0.0000
+  down  n= 90  A 0.11  B 0.07  (A only 10, B only 6)  exact McNemar p = 0.4545
+  all   n=180  A 0.25  B 0.09  (A only 36, B only 7)  exact McNemar p = 0.0000
+
+Paired goal-sphere success: A = released_base_height, B = ft_height_height
+  up    n= 90  A 0.00  B 0.11  (A only 0, B only 10)  exact McNemar p = 0.0020
+  down  n= 90  A 0.54  B 0.07  (A only 45, B only 2)  exact McNemar p = 0.0000
+  all   n=180  A 0.27  B 0.09  (A only 45, B only 12)  exact McNemar p = 0.0000
+
+Paired goal-sphere success: A = released_base_height, B = ft_fix_height
+  up    n= 90  A 0.00  B 0.39  (A only 0, B only 35)  exact McNemar p = 0.0000
+  down  n= 90  A 0.54  B 0.11  (A only 41, B only 2)  exact McNemar p = 0.0000
+  all   n=180  A 0.27  B 0.25  (A only 41, B only 37)  exact McNemar p = 0.7343
+
+
+##### Height-change test: safe success
+$ python /content/uav/lab_tools/learning_curve.py released_base_height ft_fix_height ft_height_height
+success = reached goal sphere or goal plane with no collision
+checkpoint             easy  medium   hard | all (95% CI)           goal sphere collisions
+released_base_height   0.97    0.93   0.95 | 0.95 [0.91, 0.97] (171/180)     0.27          8
+ft_fix_height          0.98    0.98   0.95 | 0.97 [0.94, 0.99] (175/180)     0.25          2
+ft_height_height       1.00    0.98   0.93 | 0.97 [0.94, 0.99] (175/180)     0.09          3
+
+##### Ten metrics, height-change test
+$ python /content/uav/lab_tools/ten_metrics.py benchmark_results released_base_height ft_fix_height ft_height_height --pair ft_fix_height ft_height_height --pair released_base_height ft_height_height --pair released_base_height ft_fix_height --out summary/ten_metrics_height
+## Ten-metric statistics
+
+Rates: Wilson 95% CI. Means: 95% CI from a scene-cluster bootstrap (2000 resamples).
+
+### released_base_height (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.272 | [0.212, 0.341] | - | - |
+| collision | rate | lower | 0.044 | [0.023, 0.085] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.414 | [0.351, 0.486] | 0.366 | 0.351 |
+| path_excess_factor | 1 | lower | 0.042 | [0.011, 0.066] | 0.167 | 0.070 |
+| average_speed_mps | m/s | - | 2.648 | [2.573, 2.716] | 0.744 | 2.261 |
+| relative_end_distance | 1 | lower | 0.085 | [0.062, 0.114] | 0.153 | 0.057 |
+| speed_rmse_mps | m/s | lower | 1.071 | [1.024, 1.126] | 0.500 | 1.199 |
+| jerk_rms_mps3 | m/s^3 | lower | 8.231 | [6.989, 9.887] | 7.970 | 6.876 |
+
+### ft_fix_height (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.250 | [0.192, 0.318] | - | - |
+| collision | rate | lower | 0.011 | [0.003, 0.040] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.427 | [0.384, 0.478] | 0.254 | 0.400 |
+| path_excess_factor | 1 | lower | 0.045 | [0.021, 0.063] | 0.126 | 0.060 |
+| average_speed_mps | m/s | - | 2.580 | [2.496, 2.649] | 0.763 | 2.215 |
+| relative_end_distance | 1 | lower | 0.073 | [0.056, 0.096] | 0.119 | 0.054 |
+| speed_rmse_mps | m/s | lower | 1.084 | [1.033, 1.147] | 0.524 | 1.242 |
+| jerk_rms_mps3 | m/s^3 | lower | 5.234 | [4.983, 5.490] | 1.850 | 5.054 |
+
+### ft_height_height (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.089 | [0.055, 0.140] | - | - |
+| collision | rate | lower | 0.017 | [0.006, 0.048] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.418 | [0.379, 0.460] | 0.212 | 0.393 |
+| path_excess_factor | 1 | lower | 0.066 | [0.047, 0.078] | 0.082 | 0.068 |
+| average_speed_mps | m/s | - | 2.608 | [2.522, 2.681] | 0.754 | 2.193 |
+| relative_end_distance | 1 | lower | 0.069 | [0.058, 0.087] | 0.080 | 0.055 |
+| speed_rmse_mps | m/s | lower | 1.084 | [1.035, 1.146] | 0.512 | 1.215 |
+| jerk_rms_mps3 | m/s^3 | lower | 5.448 | [5.258, 5.654] | 1.488 | 5.332 |
+
+### Scene metrics (properties of the test scenes, same for every checkpoint)
+
+| Difficulty | Scenes | traversability (mean) | relative_gap_size (mean) |
+|---|---|---|---|
+| easy | 30 | 14.514 | n/a |
+| hard | 30 | 8.136 | n/a |
+| medium | 30 | 10.762 | n/a |
+
+### Paired: A = ft_fix_height vs B = ft_height_height (same scene and speed)
+
+| Metric | Better | Mean A | Mean B | n | Test | p | p (Holm) |
+|---|---|---|---|---|---|---|---|
+| goal_success | higher | 0.250 | 0.089 | 180 | McNemar (A only 36, B only 7) | 0.0000 | 0.0001 * |
+| collision | lower | 0.011 | 0.017 | 180 | McNemar (A only 2, B only 3) | 1.0000 | 1.0000 |
+| min_obstacle_clearance_m | higher | 0.427 | 0.418 | 180 | Wilcoxon signed-rank | 0.8137 | 1.0000 |
+| path_excess_factor | lower | 0.045 | 0.066 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+| average_speed_mps | - | 2.580 | 2.608 | 180 | Wilcoxon signed-rank | 0.0029 | 0.0144 * |
+| relative_end_distance | lower | 0.073 | 0.069 | 180 | Wilcoxon signed-rank | 0.0374 | 0.1496 |
+| speed_rmse_mps | lower | 1.084 | 1.084 | 180 | Wilcoxon signed-rank | 0.1225 | 0.3676 |
+| jerk_rms_mps3 | lower | 5.234 | 5.448 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+
+* = significant at 0.05 after Holm correction over the 8 flight metrics.
+
+### Paired: A = released_base_height vs B = ft_height_height (same scene and speed)
+
+| Metric | Better | Mean A | Mean B | n | Test | p | p (Holm) |
+|---|---|---|---|---|---|---|---|
+| goal_success | higher | 0.272 | 0.089 | 180 | McNemar (A only 45, B only 12) | 0.0000 | 0.0001 * |
+| collision | lower | 0.044 | 0.017 | 180 | McNemar (A only 6, B only 1) | 0.1250 | 0.3750 |
+| min_obstacle_clearance_m | higher | 0.414 | 0.418 | 180 | Wilcoxon signed-rank | 0.0001 | 0.0005 * |
+| path_excess_factor | lower | 0.042 | 0.066 | 180 | Wilcoxon signed-rank | 0.7905 | 1.0000 |
+| average_speed_mps | - | 2.648 | 2.608 | 180 | Wilcoxon signed-rank | 0.0004 | 0.0022 * |
+| relative_end_distance | lower | 0.085 | 0.069 | 180 | Wilcoxon signed-rank | 0.9840 | 1.0000 |
+| speed_rmse_mps | lower | 1.071 | 1.084 | 180 | Wilcoxon signed-rank | 0.0179 | 0.0717 |
+| jerk_rms_mps3 | lower | 8.231 | 5.448 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+
+* = significant at 0.05 after Holm correction over the 8 flight metrics.
+
+### Paired: A = released_base_height vs B = ft_fix_height (same scene and speed)
+
+| Metric | Better | Mean A | Mean B | n | Test | p | p (Holm) |
+|---|---|---|---|---|---|---|---|
+| goal_success | higher | 0.272 | 0.250 | 180 | McNemar (A only 41, B only 37) | 0.7343 | 0.7343 |
+| collision | lower | 0.044 | 0.011 | 180 | McNemar (A only 8, B only 2) | 0.1094 | 0.3225 |
+| min_obstacle_clearance_m | higher | 0.414 | 0.427 | 180 | Wilcoxon signed-rank | 0.0003 | 0.0019 * |
+| path_excess_factor | lower | 0.042 | 0.045 | 180 | Wilcoxon signed-rank | 0.0211 | 0.1057 |
+| average_speed_mps | - | 2.648 | 2.580 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+| relative_end_distance | lower | 0.085 | 0.073 | 180 | Wilcoxon signed-rank | 0.0905 | 0.3225 |
+| speed_rmse_mps | lower | 1.071 | 1.084 | 180 | Wilcoxon signed-rank | 0.0806 | 0.3225 |
+| jerk_rms_mps3 | lower | 8.231 | 5.234 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+
+* = significant at 0.05 after Holm correction over the 8 flight metrics.
+
+
+Wrote summary/ten_metrics_height.md and CSV files next to it.
+
+##### Standard scenes (lab_* = lab GPU, others = Colab)
+$ python /content/uav/lab_tools/learning_curve.py lab_released_base_fov82 released_base_fov82 ft_fix_fov82 ft_height_fov82
+success = reached goal sphere or goal plane with no collision
+checkpoint             easy  medium   hard | all (95% CI)           goal sphere collisions
+lab_released_base_fov82   0.98    0.98   0.97 | 0.98 [0.94, 0.99] (176/180)     0.50          3
+released_base_fov82    0.98    0.98   0.97 | 0.98 [0.94, 0.99] (176/180)     0.49          3
+ft_fix_fov82           0.98    0.98   0.92 | 0.96 [0.92, 0.98] (173/180)     0.50          3
+ft_height_fov82        0.98    0.95   0.95 | 0.96 [0.92, 0.98] (173/180)     0.52          3
+
+##### Standard scenes, paired: released_base_fov82 vs ft_height_fov82
+$ python /content/uav/lab_tools/compare_paired.py released_base_fov82 ft_height_fov82
+A = released_base_fov82   B = ft_height_fov82   (same scenes, paired)
+group           n | success A success B       p | goal A goal B | collide A collide B
+easy 2.0       30 |      0.97      0.97   1.000 |   0.77   0.90 |         0         0
+easy 4.0       30 |      1.00      1.00   1.000 |   0.40   0.47 |         0         0
+hard 2.0       30 |      0.93      0.93   1.000 |   0.53   0.53 |         2         1
+hard 4.0       30 |      1.00      0.97   1.000 |   0.20   0.23 |         0         0
+medium 2.0     30 |      0.97      1.00   1.000 |   0.70   0.63 |         1         0
+medium 4.0     30 |      1.00      0.90   0.250 |   0.37   0.33 |         0         2
+ALL           180 |      0.98      0.96   0.453 |   0.49   0.52 |         3         3
+
+##### Standard scenes, paired: ft_fix_fov82 vs ft_height_fov82
+$ python /content/uav/lab_tools/compare_paired.py ft_fix_fov82 ft_height_fov82
+A = ft_fix_fov82   B = ft_height_fov82   (same scenes, paired)
+group           n | success A success B       p | goal A goal B | collide A collide B
+easy 2.0       30 |      0.97      0.97   1.000 |   0.80   0.90 |         0         0
+easy 4.0       30 |      1.00      1.00   1.000 |   0.47   0.47 |         0         0
+hard 2.0       30 |      0.87      0.93   0.500 |   0.43   0.53 |         2         1
+hard 4.0       30 |      0.97      0.97   1.000 |   0.27   0.23 |         0         0
+medium 2.0     30 |      1.00      1.00   1.000 |   0.67   0.63 |         0         0
+medium 4.0     30 |      0.97      0.90   0.500 |   0.37   0.33 |         1         2
+ALL           180 |      0.96      0.96   1.000 |   0.50   0.52 |         3         3
+
+##### Standard scenes, paired: released_base_fov82 vs ft_fix_fov82
+$ python /content/uav/lab_tools/compare_paired.py released_base_fov82 ft_fix_fov82
+A = released_base_fov82   B = ft_fix_fov82   (same scenes, paired)
+group           n | success A success B       p | goal A goal B | collide A collide B
+easy 2.0       30 |      0.97      0.97   1.000 |   0.77   0.80 |         0         0
+easy 4.0       30 |      1.00      1.00   1.000 |   0.40   0.47 |         0         0
+hard 2.0       30 |      0.93      0.87   0.625 |   0.53   0.43 |         2         2
+hard 4.0       30 |      1.00      0.97   1.000 |   0.20   0.27 |         0         0
+medium 2.0     30 |      0.97      1.00   1.000 |   0.70   0.67 |         1         0
+medium 4.0     30 |      1.00      0.97   1.000 |   0.37   0.37 |         0         1
+ALL           180 |      0.98      0.96   0.453 |   0.49   0.50 |         3         3
+
+##### Ten metrics, standard scenes
+$ python /content/uav/lab_tools/ten_metrics.py benchmark_results released_base_fov82 ft_fix_fov82 ft_height_fov82 --pair ft_fix_fov82 ft_height_fov82 --pair released_base_fov82 ft_fix_fov82 --out summary/ten_metrics_standard
+## Ten-metric statistics
+
+Rates: Wilson 95% CI. Means: 95% CI from a scene-cluster bootstrap (2000 resamples).
+
+### released_base_fov82 (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.494 | [0.422, 0.567] | - | - |
+| collision | rate | lower | 0.017 | [0.006, 0.048] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.390 | [0.338, 0.446] | 0.311 | 0.337 |
+| path_excess_factor | 1 | lower | 0.044 | [0.025, 0.061] | 0.129 | 0.063 |
+| average_speed_mps | m/s | - | 2.691 | [2.625, 2.748] | 0.726 | 2.273 |
+| relative_end_distance | 1 | lower | 0.063 | [0.048, 0.082] | 0.123 | 0.044 |
+| speed_rmse_mps | m/s | lower | 1.048 | [1.008, 1.093] | 0.460 | 1.182 |
+| jerk_rms_mps3 | m/s^3 | lower | 7.724 | [6.966, 8.717] | 5.198 | 6.967 |
+
+### ft_fix_fov82 (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.500 | [0.428, 0.572] | - | - |
+| collision | rate | lower | 0.017 | [0.006, 0.048] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.419 | [0.375, 0.470] | 0.259 | 0.404 |
+| path_excess_factor | 1 | lower | 0.030 | [0.012, 0.044] | 0.106 | 0.046 |
+| average_speed_mps | m/s | - | 2.609 | [2.527, 2.677] | 0.763 | 2.232 |
+| relative_end_distance | 1 | lower | 0.062 | [0.048, 0.078] | 0.105 | 0.034 |
+| speed_rmse_mps | m/s | lower | 1.073 | [1.021, 1.135] | 0.512 | 1.251 |
+| jerk_rms_mps3 | m/s^3 | lower | 5.255 | [5.004, 5.511] | 1.837 | 5.136 |
+
+### ft_height_fov82 (180 flights)
+
+| Metric | Unit | Better | Estimate | 95% CI | SD | Median |
+|---|---|---|---|---|---|---|
+| goal_success | rate | higher | 0.517 | [0.444, 0.589] | - | - |
+| collision | rate | lower | 0.017 | [0.006, 0.048] | - | - |
+| min_obstacle_clearance_m | m | higher | 0.429 | [0.383, 0.480] | 0.271 | 0.405 |
+| path_excess_factor | 1 | lower | 0.029 | [0.006, 0.046] | 0.122 | 0.050 |
+| average_speed_mps | m/s | - | 2.615 | [2.523, 2.695] | 0.770 | 2.225 |
+| relative_end_distance | 1 | lower | 0.063 | [0.046, 0.086] | 0.121 | 0.025 |
+| speed_rmse_mps | m/s | lower | 1.098 | [1.044, 1.163] | 0.526 | 1.225 |
+| jerk_rms_mps3 | m/s^3 | lower | 5.568 | [5.350, 5.827] | 1.700 | 5.407 |
+
+### Scene metrics (properties of the test scenes, same for every checkpoint)
+
+| Difficulty | Scenes | traversability (mean) | relative_gap_size (mean) |
+|---|---|---|---|
+| easy | 30 | 14.514 | n/a |
+| hard | 30 | 8.136 | n/a |
+| medium | 30 | 10.762 | n/a |
+
+### Paired: A = ft_fix_fov82 vs B = ft_height_fov82 (same scene and speed)
+
+| Metric | Better | Mean A | Mean B | n | Test | p | p (Holm) |
+|---|---|---|---|---|---|---|---|
+| goal_success | higher | 0.500 | 0.517 | 180 | McNemar (A only 13, B only 16) | 0.7111 | 1.0000 |
+| collision | lower | 0.017 | 0.017 | 180 | McNemar (A only 1, B only 1) | 1.0000 | 1.0000 |
+| min_obstacle_clearance_m | higher | 0.419 | 0.429 | 180 | Wilcoxon signed-rank | 0.4573 | 1.0000 |
+| path_excess_factor | lower | 0.030 | 0.029 | 180 | Wilcoxon signed-rank | 0.0576 | 0.2708 |
+| average_speed_mps | - | 2.609 | 2.615 | 180 | Wilcoxon signed-rank | 0.0028 | 0.0167 * |
+| relative_end_distance | lower | 0.062 | 0.063 | 180 | Wilcoxon signed-rank | 0.0542 | 0.2708 |
+| speed_rmse_mps | lower | 1.073 | 1.098 | 180 | Wilcoxon signed-rank | 0.0004 | 0.0031 * |
+| jerk_rms_mps3 | lower | 5.255 | 5.568 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+
+* = significant at 0.05 after Holm correction over the 8 flight metrics.
+
+### Paired: A = released_base_fov82 vs B = ft_fix_fov82 (same scene and speed)
+
+| Metric | Better | Mean A | Mean B | n | Test | p | p (Holm) |
+|---|---|---|---|---|---|---|---|
+| goal_success | higher | 0.494 | 0.500 | 180 | McNemar (A only 18, B only 19) | 1.0000 | 1.0000 |
+| collision | lower | 0.017 | 0.017 | 180 | McNemar (A only 2, B only 2) | 1.0000 | 1.0000 |
+| min_obstacle_clearance_m | higher | 0.390 | 0.419 | 180 | Wilcoxon signed-rank | 0.0003 | 0.0014 * |
+| path_excess_factor | lower | 0.044 | 0.030 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+| average_speed_mps | - | 2.691 | 2.609 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+| relative_end_distance | lower | 0.063 | 0.062 | 180 | Wilcoxon signed-rank | 0.6262 | 1.0000 |
+| speed_rmse_mps | lower | 1.048 | 1.073 | 180 | Wilcoxon signed-rank | 0.1569 | 0.6275 |
+| jerk_rms_mps3 | lower | 7.724 | 5.255 | 180 | Wilcoxon signed-rank | 0.0000 | 0.0000 * |
+
+* = significant at 0.05 after Holm correction over the 8 flight metrics.
+
+
+Wrote summary/ten_metrics_standard.md and CSV files next to it.

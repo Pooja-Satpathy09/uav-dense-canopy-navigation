@@ -169,3 +169,9 @@ Our target benchmark has ten measurements. This is a **project-defined metric se
 ## 11. Working agreement
 
 Work in small commits, test code before pushing, avoid edits to upstream submodule history, record experiment seeds/configurations and never label synthetic numerical tests as real trained-policy results.
+
+## 12. Final results
+
+- **Evaluation and reproduction:** [`benchmark_docs/LAB_EVALUATION.md`](benchmark_docs/LAB_EVALUATION.md). With an evaluation matched to training, our DiffPhysDrone model completes 96% of 180 flights without collision, on par with the authors' released model (98%, p = 0.51).
+- **Height-aware training:** [`benchmark_docs/HEIGHT_AWARE_TRAINING.md`](benchmark_docs/HEIGHT_AWARE_TRAINING.md). A loss-term bug makes the policy fly low; fixing it removes the bias without loss of safety, and an explicit height loss gives the first measurable height following.
+- **Final report:** [`docs/Final_Report_Team03.pdf`](docs/Final_Report_Team03.pdf).

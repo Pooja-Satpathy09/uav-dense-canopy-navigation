@@ -1,0 +1,41 @@
+A,B,metric,unit,better,n_pairs,mean_A,mean_B,test,p,p_holm
+ft_height_height,ft_hloss2_height,goal_success,rate,higher,180,0.08888888888888889,0.29444444444444445,"McNemar (A only 10, B only 47)",7.513043097095995e-07,6.010434477676796e-06
+ft_height_height,ft_hloss2_height,collision,rate,lower,180,0.016666666666666666,0.022222222222222223,"McNemar (A only 2, B only 3)",1.0,1.0
+ft_height_height,ft_hloss2_height,min_obstacle_clearance_m,m,higher,180,0.41795410188912885,0.40949786556060513,Wilcoxon signed-rank,0.3961475236450225,1.0
+ft_height_height,ft_hloss2_height,path_excess_factor,1,lower,180,0.06563198929624509,0.05209743664265436,Wilcoxon signed-rank,0.06943056227173955,0.2777222490869582
+ft_height_height,ft_hloss2_height,average_speed_mps,m/s,,180,2.608369626451043,2.615623523639227,Wilcoxon signed-rank,0.7576613304607,1.0
+ft_height_height,ft_hloss2_height,relative_end_distance,1,lower,180,0.06872375619713166,0.06664195389270314,Wilcoxon signed-rank,0.011411078894657879,0.06104567193866374
+ft_height_height,ft_hloss2_height,speed_rmse_mps,m/s,lower,180,1.0838616569319393,1.0668982702874235,Wilcoxon signed-rank,0.010174278656443957,0.06104567193866374
+ft_height_height,ft_hloss2_height,jerk_rms_mps3,m/s^3,lower,180,5.44751639089273,5.740600794313537,Wilcoxon signed-rank,0.0001390924880502421,0.0009736474163516947
+ft_height_height,ft_hloss5_height,goal_success,rate,higher,180,0.08888888888888889,0.29444444444444445,"McNemar (A only 10, B only 47)",7.513043097095995e-07,5.2591301679671965e-06
+ft_height_height,ft_hloss5_height,collision,rate,lower,180,0.016666666666666666,0.03888888888888889,"McNemar (A only 1, B only 5)",0.21875,0.4375
+ft_height_height,ft_hloss5_height,min_obstacle_clearance_m,m,higher,180,0.41795410188912885,0.3778047989726639,Wilcoxon signed-rank,8.107589085881421e-05,0.0004053794542940711
+ft_height_height,ft_hloss5_height,path_excess_factor,1,lower,180,0.06563198929624509,0.04515511571690187,Wilcoxon signed-rank,1.6238885900549848e-05,9.743331540329909e-05
+ft_height_height,ft_hloss5_height,average_speed_mps,m/s,,180,2.608369626451043,2.587729149176519,Wilcoxon signed-rank,0.7827799473761392,0.7827799473761392
+ft_height_height,ft_hloss5_height,relative_end_distance,1,lower,180,0.06872375619713166,0.06542170539326611,Wilcoxon signed-rank,0.00016813156759353296,0.0006725262703741318
+ft_height_height,ft_hloss5_height,speed_rmse_mps,m/s,lower,180,1.0838616569319393,1.0821064969399519,Wilcoxon signed-rank,0.0006433287780465306,0.0019299863341395917
+ft_height_height,ft_hloss5_height,jerk_rms_mps3,m/s^3,lower,180,5.44751639089273,5.791283646155241,Wilcoxon signed-rank,9.894889244968722e-09,7.915911395974978e-08
+ft_fix_height,ft_hloss2_height,goal_success,rate,higher,180,0.25,0.29444444444444445,"McNemar (A only 36, B only 44)",0.4340422553454787,1.0
+ft_fix_height,ft_hloss2_height,collision,rate,lower,180,0.011111111111111112,0.022222222222222223,"McNemar (A only 2, B only 4)",0.6875,1.0
+ft_fix_height,ft_hloss2_height,min_obstacle_clearance_m,m,higher,180,0.4271906803740675,0.40949786556060513,Wilcoxon signed-rank,0.31664804955570625,1.0
+ft_fix_height,ft_hloss2_height,path_excess_factor,1,lower,180,0.04486762545624552,0.05209743664265436,Wilcoxon signed-rank,0.28722756582663367,1.0
+ft_fix_height,ft_hloss2_height,average_speed_mps,m/s,,180,2.579635128352499,2.615623523639227,Wilcoxon signed-rank,0.004615798937643277,0.03231059256350294
+ft_fix_height,ft_hloss2_height,relative_end_distance,1,lower,180,0.07277206273801108,0.06664195389270314,Wilcoxon signed-rank,0.43963376854172564,1.0
+ft_fix_height,ft_hloss2_height,speed_rmse_mps,m/s,lower,180,1.084091034959044,1.0668982702874235,Wilcoxon signed-rank,0.6434862345106851,1.0
+ft_fix_height,ft_hloss2_height,jerk_rms_mps3,m/s^3,lower,180,5.234041508845647,5.740600794313537,Wilcoxon signed-rank,4.909588991194242e-12,3.927671192955393e-11
+released_base_height,ft_hloss2_height,goal_success,rate,higher,180,0.2722222222222222,0.29444444444444445,"McNemar (A only 5, B only 9)",0.4239501953125,0.7287187958744796
+released_base_height,ft_hloss2_height,collision,rate,lower,180,0.044444444444444446,0.022222222222222223,"McNemar (A only 5, B only 1)",0.21875,0.65625
+released_base_height,ft_hloss2_height,min_obstacle_clearance_m,m,higher,180,0.4142000485189162,0.40949786556060513,Wilcoxon signed-rank,0.0002454821549923314,0.0009819286199693256
+released_base_height,ft_hloss2_height,path_excess_factor,1,lower,180,0.041653109237488405,0.05209743664265436,Wilcoxon signed-rank,1.7921923618042217e-07,1.075315417082533e-06
+released_base_height,ft_hloss2_height,average_speed_mps,m/s,,180,2.6482103782193294,2.615623523639227,Wilcoxon signed-rank,3.58627826200053e-07,1.7931391310002651e-06
+released_base_height,ft_hloss2_height,relative_end_distance,1,lower,180,0.08529897338358432,0.06664195389270314,Wilcoxon signed-rank,1.5287165882448305e-10,1.0701016117713814e-09
+released_base_height,ft_hloss2_height,speed_rmse_mps,m/s,lower,180,1.0713461671917435,1.0668982702874235,Wilcoxon signed-rank,0.3643593979372398,0.7287187958744796
+released_base_height,ft_hloss2_height,jerk_rms_mps3,m/s^3,lower,180,8.231070762197387,5.740600794313537,Wilcoxon signed-rank,1.3205378325874993e-24,1.0564302660699994e-23
+ft_hloss2_height,ft_hloss5_height,goal_success,rate,higher,180,0.29444444444444445,0.29444444444444445,"McNemar (A only 6, B only 6)",1.0,1.0
+ft_hloss2_height,ft_hloss5_height,collision,rate,lower,180,0.022222222222222223,0.03888888888888889,"McNemar (A only 2, B only 5)",0.453125,1.0
+ft_hloss2_height,ft_hloss5_height,min_obstacle_clearance_m,m,higher,180,0.40949786556060513,0.3778047989726639,Wilcoxon signed-rank,8.540472592213108e-06,5.9783308145491755e-05
+ft_hloss2_height,ft_hloss5_height,path_excess_factor,1,lower,180,0.05209743664265436,0.04515511571690187,Wilcoxon signed-rank,1.5421145149662393e-08,1.2336916119729915e-07
+ft_hloss2_height,ft_hloss5_height,average_speed_mps,m/s,,180,2.615623523639227,2.587729149176519,Wilcoxon signed-rank,0.8392559952733375,1.0
+ft_hloss2_height,ft_hloss5_height,relative_end_distance,1,lower,180,0.06664195389270314,0.06542170539326611,Wilcoxon signed-rank,0.0005180898681845401,0.0031085392091072406
+ft_hloss2_height,ft_hloss5_height,speed_rmse_mps,m/s,lower,180,1.0668982702874235,1.0821064969399519,Wilcoxon signed-rank,0.6976100723964973,1.0
+ft_hloss2_height,ft_hloss5_height,jerk_rms_mps3,m/s^3,lower,180,5.740600794313537,5.791283646155241,Wilcoxon signed-rank,0.08162638033379557,0.40813190166897784
