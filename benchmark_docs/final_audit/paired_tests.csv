@@ -1,0 +1,4 @@
+comparison,outcome,exact_mcnemar_p
+Our 50k vs authors,safe,0.507812
+Our 50k vs authors,goal,0.013283
+Our 50k vs authors,collision,0.289062

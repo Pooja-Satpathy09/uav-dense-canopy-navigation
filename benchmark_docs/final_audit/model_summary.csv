@@ -1,0 +1,12 @@
+dataset,model,flights,safe_count,safe_rate,safe_ci_low,safe_ci_high,exact_goal_count,exact_goal_rate,collision_count,plane_only_count,plane_only_median_miss_m,plane_only_max_miss_m,plane_only_over_1m
+standard,Our 50k,180,173,0.9611,0.9219,0.981,72,0.4,7,101,0.954,2.603,44
+standard,Authors,180,176,0.9778,0.9443,0.9913,90,0.5,3,86,1.144,2.504,48
+standard,FT loss fix,180,173,0.9611,0.9219,0.981,90,0.5,3,83,1.142,2.412,49
+standard,FT height targets,180,173,0.9611,0.9219,0.981,93,0.5167,3,80,1.006,2.532,41
+standard,FT height loss 2,180,173,0.9611,0.9219,0.981,100,0.5556,4,73,1.17,2.423,44
+standard,FT height loss 5,180,175,0.9722,0.9366,0.9881,94,0.5222,5,81,1.028,2.454,42
+height_change,Authors,180,171,0.95,0.9077,0.9735,49,0.2722,8,122,0.961,2.479,57
+height_change,FT loss fix,180,175,0.9722,0.9366,0.9881,45,0.25,2,130,0.851,2.428,57
+height_change,FT height targets,180,175,0.9722,0.9366,0.9881,16,0.0889,3,159,0.703,2.602,51
+height_change,FT height loss 2,180,174,0.9667,0.9292,0.9846,53,0.2944,4,121,0.88,2.413,48
+height_change,FT height loss 5,180,171,0.95,0.9077,0.9735,53,0.2944,7,118,0.811,2.453,49
