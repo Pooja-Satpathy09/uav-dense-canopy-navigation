@@ -1,6 +1,5 @@
-# Dense-Canopy UAV Navigation: Reproducible Evaluation and Height-Aware Training
+# Dense-Canopy UAV Navigation
 
-**Foundations of Robotics — Direction A: Reproducible Evaluation Suite**
 
 ## 1. Project Overview
 
