@@ -5,6 +5,7 @@ from pathlib import Path
 from .aggregate import summarize
 from .batch import evaluate_manifest
 from .demo import demo
+from .audit import audit_experiment
 from .io import dump_json, file_hash, fingerprint, load_config, load_json, load_trajectory
 from .metrics import evaluate_run, evaluate_scene
 
@@ -86,6 +87,12 @@ def parser():
     p.add_argument("--plan", required=True)
     p.add_argument("--out", required=True)
     p.add_argument("--resume", action="store_true")
+    p = sub.add_parser(
+        "audit-experiment",
+        help="Audit execution completeness of an existing experiment",
+    )
+    p.add_argument("--inputs", required=True, help="Experiment output directory")
+    p.add_argument("--out", required=True, help="Audit JSON output path")
     return root
 
 
@@ -169,6 +176,15 @@ def main(argv=None):
             report = experiment(args.repo, args.checkpoint, args.plan, args.out, resume=args.resume)
             print(f"Saved {report['completed_result_files']}/{report['planned_runs']} run results")
             return 1 if report["attempt_errors"] or any(g["incomplete_or_numerical"] for g in report["groups"]) else 0
+        elif args.command == "audit-experiment":
+            report = audit_experiment(args.inputs)
+            dump_json(args.out, report)
+            print(
+                f"Audit complete: {report['completed_runs']}/{report['planned_runs']} "
+                f"runs completed ({report['completion_percentage']}%). "
+                f"Report: {args.out}"
+            )
+            return 0 if report["failed_runs"] == 0 and report["interrupted_runs"] == 0 and report["missing_runs"] == 0 else 1
         return 0
     except (ValueError, TypeError, KeyError, OSError, ImportError, RuntimeError) as error:
         print(f"ERROR: {error}", file=sys.stderr)
